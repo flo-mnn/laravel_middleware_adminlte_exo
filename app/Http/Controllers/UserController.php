@@ -10,7 +10,7 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('isAuthor')->only('edit','update','destroy');
+        // $this->middleware('isAuthor')->only('edit','update','destroy');
     }
     /**
      * Display a listing of the resource.
@@ -19,7 +19,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return view ('users.index',
+        [
+            'users'=>User::all()
+        ]);
     }
 
     /**
@@ -62,7 +65,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        $item = $user;
+        $this->authorize('edit-user', $item);
+        return 'hello edit page';
     }
 
     /**

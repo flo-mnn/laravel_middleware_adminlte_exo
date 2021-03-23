@@ -8,7 +8,8 @@
                 <th scope="col">Author</th>
                 <th scope="col">Title</th>
                 <th scope="col">Preview</th>
-                <th scope="col">Handle</th>
+                <th scope="col">show</th>
+                <th scope="col">del</th>
               </tr>
             </thead>
             <tbody>
@@ -19,6 +20,15 @@
                 <td>{{$article->title}}</td>
                 <td>{{Str::words($article->content, 10)}}</td>
                 <td><a href="/articles/{{$article->id}}" class="btn btn-primary">show</a></td>
+                <td>
+                  @can('article-delete', $article)  
+                  <form action="/articles/{{$article->id}}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">del</button>
+                  </form>
+                  @endcan
+                </td>
               </tr>
              @endforeach
             </tbody>
